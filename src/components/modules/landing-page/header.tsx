@@ -2,7 +2,7 @@
 import Image from "next/image";
 import Link from "next/link";
 import React, { useState } from "react";
-import Logo from "../../../public/cypresslogo.svg";
+import Logo from "../../../../public/cypresslogo.svg";
 
 import {
   NavigationMenu,
