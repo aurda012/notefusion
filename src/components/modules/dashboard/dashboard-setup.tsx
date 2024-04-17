@@ -1,7 +1,7 @@
 "use client";
 import { AuthUser } from "@supabase/supabase-js";
 import React, { useState } from "react";
-import { FieldValues, SubmitHandler, useForm } from "react-hook-form";
+import { SubmitHandler, useForm } from "react-hook-form";
 import { v4 } from "uuid";
 
 import {
@@ -14,13 +14,13 @@ import {
 import EmojiPicker from "@/components/common/emoji-picker";
 import { Label } from "@/components/ui/label";
 import { Input } from "@/components/ui/input";
-import { Subscription, workspace } from "@/lib/supabase/supabase.types";
+import { Subscription, workspace } from "@/lib/supabase/types";
 import { Button } from "@/components/ui/button";
 import Loader from "@/components/common/loader";
 import { createWorkspace } from "@/lib/supabase/queries";
 import { useToast } from "@/components/ui/use-toast";
 import { useRouter } from "next/navigation";
-import { useAppState } from "@/lib/providers/state-provider";
+import { useAppState } from "@/hooks/useAppState";
 import { createClientComponentClient } from "@supabase/auth-helpers-nextjs";
 import { CreateWorkspaceFormSchema } from "@/lib/types";
 import { z } from "zod";
@@ -64,7 +64,7 @@ const DashboardSetup: React.FC<DashboardSetupProps> = ({
       try {
         const { data, error } = await supabase.storage
           .from("workspace-logos")
-          .upload(`workspaceLogo.${workspaceUUID}`, file, {
+          .upload(`workspace-logo.${workspaceUUID}`, file, {
             cacheControl: "3600",
             upsert: true,
           });
