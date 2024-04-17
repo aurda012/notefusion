@@ -293,7 +293,7 @@ const HomePage = () => {
             <CustomCard
               key={card.planType}
               className={clsx(
-                "w-[300px] rounded-2xl dark:bg-black/40 background-blur-3xl relative",
+                "w-[300px] rounded-2xl dark:bg-black/40 background-blur-3xl relative mb-20",
                 {
                   "border-brand-primaryPurple/70":
                     card.planType === PRICING_PLANS.proplan,
