@@ -6,7 +6,7 @@ import { ThemeProvider } from "@/providers/theme-provider";
 import { DM_Sans } from "next/font/google";
 import { twMerge } from "tailwind-merge";
 import AppStateProvider from "@/providers/state-provider";
-// import { SupabaseUserProvider } from '@/lib/providers/supabase-user-provider';
+import { SupabaseUserProvider } from "@/providers/supabase-user-provider";
 import { Toaster } from "@/components/ui/toaster";
 // import { SocketProvider } from '@/lib/providers/socket-provider';
 
@@ -27,12 +27,12 @@ export default function RootLayout({
       <body className={twMerge("bg-background", inter.className)}>
         <ThemeProvider attribute="class" defaultTheme="dark" enableSystem>
           <AppStateProvider>
-            {/* <SupabaseUserProvider> */}
-            {/* <SocketProvider> */}
-            {children}
-            <Toaster />
-            {/* </SocketProvider> */}
-            {/* </SupabaseUserProvider> */}
+            <SupabaseUserProvider>
+              {/* <SocketProvider> */}
+              {children}
+              <Toaster />
+              {/* </SocketProvider> */}
+            </SupabaseUserProvider>
           </AppStateProvider>
         </ThemeProvider>
       </body>
