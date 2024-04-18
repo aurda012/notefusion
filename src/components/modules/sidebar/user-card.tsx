@@ -59,14 +59,14 @@ const UserCard: React.FC<UserCardProps> = async ({ subscription }) => {
           <span className="text-muted-foreground">
             {subscription?.status === "active" ? "Pro Plan" : "Free Plan"}
           </span>
-          <small
+          {/* <small
             className="w-[100px] 
           overflow-hidden 
           overflow-ellipsis
           "
           >
             {profile.email}
-          </small>
+          </small> */}
         </div>
       </aside>
       <div className="flex items-center justify-center">

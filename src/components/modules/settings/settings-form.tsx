@@ -78,7 +78,7 @@ const SettingsForm = () => {
     setLoadingPortal(true);
     try {
       const { url, error } = await postData({
-        url: "/api/create-portal-link",
+        url: "/api/stripe/create-portal-link",
       });
       window.location.assign(url);
     } catch (error) {
@@ -384,7 +384,10 @@ const SettingsForm = () => {
             </AvatarFallback>
           </Avatar>
           <div className="flex flex-col ml-6">
-            <small className="text-muted-foreground cursor-not-allowed">
+            <Label htmlFor="email" className="text-sm text-muted-foreground">
+              Email
+            </Label>
+            <small className="text-muted-foreground cursor-not-allowed mb-2">
               {user ? user.email : ""}
             </small>
             <Label
@@ -404,7 +407,8 @@ const SettingsForm = () => {
           </div>
         </div>
         <LogoutButton>
-          <div className="flex items-center">
+          <div className="flex items-center ml-6 gap-2">
+            <span>Logout</span>
             <LogOut />
           </div>
         </LogoutButton>

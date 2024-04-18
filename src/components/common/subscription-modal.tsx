@@ -14,6 +14,7 @@ import { Button } from "../ui/button";
 import Loader from "./loader";
 import { Price, ProductWithPrice } from "@/lib/supabase/types";
 import { useToast } from "../ui/use-toast";
+import { getStripe } from "@/lib/stripe/stripe-client";
 // import { getStripe } from "@/lib/stripe/stripeClient";
 
 interface SubscriptionModalProps {
@@ -40,14 +41,14 @@ const SubscriptionModal: React.FC<SubscriptionModalProps> = ({ products }) => {
         setIsLoading(false);
         return;
       }
-      // const { sessionId } = await postData({
-      //   url: "/api/create-checkout-session",
-      //   data: { price },
-      // });
+      const { sessionId } = await postData({
+        url: "/api/stripe/create-checkout-session",
+        data: { price },
+      });
 
-      // console.log("Getting Checkout for stripe");
-      // const stripe = await getStripe();
-      // stripe?.redirectToCheckout({ sessionId });
+      console.log("Getting Checkout for stripe");
+      const stripe = await getStripe();
+      stripe?.redirectToCheckout({ sessionId });
     } catch (error) {
       toast({ title: "Oppse! Something went wrong.", variant: "destructive" });
     } finally {
