@@ -35,7 +35,7 @@ const File: React.FC<FileProps> = ({ title, id, iconId, folderId }) => {
 
   //Navigate the user to a different page
   const navigatatePage = () => {
-    console.log("Filed Clicked");
+    // console.log("Filed Clicked");
     router.push(`/dashboard/${workspaceId}/${folderId}/${id}`);
   };
 

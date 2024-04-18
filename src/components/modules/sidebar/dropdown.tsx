@@ -70,7 +70,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   //Navigate the user to a different page
   const navigatatePage = (accordionId: string, type: string) => {
-    console.log("Folder Clicked");
+    // console.log("Folder Clicked");
     if (type === "folder") {
       router.push(`/dashboard/${workspaceId}/${accordionId}`);
     }
