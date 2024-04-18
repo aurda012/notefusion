@@ -83,6 +83,8 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
   const [saving, setSaving] = useState(false);
   const [localCursors, setLocalCursors] = useState<any>([]);
 
+  console.log({ socket, isConnected });
+
   const details = useMemo(() => {
     let selectedDir;
     if (dirType === "file") {
@@ -163,13 +165,13 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
       wrapper.append(editor);
       const Quill = (await import("quill")).default;
       const QuillCursors = (await import("quill-cursors")).default;
+      Quill.register("modules/cursors", QuillCursors);
       const q = new Quill(editor, {
         theme: "snow",
         modules: {
           toolbar: TOOLBAR_OPTIONS,
           cursors: {
             transformOnTextChange: true,
-            module: QuillCursors,
           },
         },
       });
@@ -395,43 +397,43 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
       const contents = quill.getContents();
       const quillLength = quill.getLength();
       saveTimerRef.current = setTimeout(async () => {
-        // if (contents && quillLength !== 1 && fileId) {
-        //   if (dirType == 'workspace') {
-        //     dispatch({
-        //       type: 'UPDATE_WORKSPACE',
-        //       payload: {
-        //         workspace: { data: JSON.stringify(contents) },
-        //         workspaceId: fileId,
-        //       },
-        //     });
-        //     await updateWorkspace({ data: JSON.stringify(contents) }, fileId);
-        //   }
-        //   if (dirType == 'folder') {
-        //     if (!workspaceId) return;
-        //     dispatch({
-        //       type: 'UPDATE_FOLDER',
-        //       payload: {
-        //         folder: { data: JSON.stringify(contents) },
-        //         workspaceId,
-        //         folderId: fileId,
-        //       },
-        //     });
-        //     await updateFolder({ data: JSON.stringify(contents) }, fileId);
-        //   }
-        //   if (dirType == 'file') {
-        //     if (!workspaceId || !folderId) return;
-        //     dispatch({
-        //       type: 'UPDATE_FILE',
-        //       payload: {
-        //         file: { data: JSON.stringify(contents) },
-        //         workspaceId,
-        //         folderId: folderId,
-        //         fileId,
-        //       },
-        //     });
-        //     await updateFile({ data: JSON.stringify(contents) }, fileId);
-        //   }
-        // }
+        if (contents && quillLength !== 1 && fileId) {
+          if (dirType == "workspace") {
+            dispatch({
+              type: "UPDATE_WORKSPACE",
+              payload: {
+                workspace: { data: JSON.stringify(contents) },
+                workspaceId: fileId,
+              },
+            });
+            await updateWorkspace({ data: JSON.stringify(contents) }, fileId);
+          }
+          if (dirType == "folder") {
+            if (!workspaceId) return;
+            dispatch({
+              type: "UPDATE_FOLDER",
+              payload: {
+                folder: { data: JSON.stringify(contents) },
+                workspaceId,
+                folderId: fileId,
+              },
+            });
+            await updateFolder({ data: JSON.stringify(contents) }, fileId);
+          }
+          if (dirType == "file") {
+            if (!workspaceId || !folderId) return;
+            dispatch({
+              type: "UPDATE_FILE",
+              payload: {
+                file: { data: JSON.stringify(contents) },
+                workspaceId,
+                folderId: folderId,
+                fileId,
+              },
+            });
+            await updateFile({ data: JSON.stringify(contents) }, fileId);
+          }
+        }
         setSaving(false);
       }, 850);
       socket.emit("send-changes", delta, fileId);
@@ -444,7 +446,17 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
       quill.off("selection-change", selectionChangeHandler);
       if (saveTimerRef.current) clearTimeout(saveTimerRef.current);
     };
-  }, [quill, socket, fileId, user, details, folderId, workspaceId, dispatch]);
+  }, [
+    quill,
+    socket,
+    fileId,
+    user,
+    details,
+    folderId,
+    workspaceId,
+    dispatch,
+    dirType,
+  ]);
 
   useEffect(() => {
     if (quill === null || socket === null) return;
@@ -599,7 +611,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
                           }
                           className="rounded-full"
                         />
-                        <AvatarFallback>
+                        <AvatarFallback className="mt-1">
                           {collaborator.email.substring(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
