@@ -5,7 +5,7 @@ import CypressHomeIcon from "@/components/icons/cypressHomeIcon";
 import CypressSettingsIcon from "@/components/icons/cypressSettingsIcon";
 import CypressTrashIcon from "@/components/icons/cypressTrashIcon";
 import Settings from "../settings/settings";
-// import Trash from "../trash/trash";
+import Trash from "../trash/trash";
 
 interface NativeNavigationProps {
   myWorkspaceId: string;
@@ -48,8 +48,7 @@ const NativeNavigation: React.FC<NativeNavigationProps> = ({
             <span>Settings</span>
           </li>
         </Settings>
-
-        {/* <Trash>
+        <Trash>
           <li
             className="group/native
             flex
@@ -61,7 +60,7 @@ const NativeNavigation: React.FC<NativeNavigationProps> = ({
             <CypressTrashIcon />
             <span>Trash</span>
           </li>
-        </Trash> */}
+        </Trash>
       </ul>
     </nav>
   );
