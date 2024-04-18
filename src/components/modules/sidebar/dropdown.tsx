@@ -14,9 +14,10 @@ import { createFile, updateFile, updateFolder } from "@/lib/supabase/queries";
 import { useToast } from "@/components/ui/use-toast";
 import TooltipComponent from "@/components/common/tooltip-component";
 import { PlusIcon, Trash } from "lucide-react";
-import { File } from "@/lib/supabase/types";
+import { File, User } from "@/lib/supabase/types";
 import { v4 } from "uuid";
 import { useSupabaseUser } from "@/hooks/useSupabaseUser";
+import FileComp from "./file";
 
 interface DropdownProps {
   title: string;
@@ -69,6 +70,7 @@ const Dropdown: React.FC<DropdownProps> = ({
 
   //Navigate the user to a different page
   const navigatatePage = (accordionId: string, type: string) => {
+    console.log("Folder Clicked");
     if (type === "folder") {
       router.push(`/dashboard/${workspaceId}/${accordionId}`);
     }
@@ -158,6 +160,7 @@ const Dropdown: React.FC<DropdownProps> = ({
       });
     }
   };
+
   const fileTitleChange = (e: any) => {
     if (!workspaceId || !folderId) return;
     const fid = id.split("folder");
@@ -261,7 +264,7 @@ const Dropdown: React.FC<DropdownProps> = ({
           "group-hover/folder:block": listType === "folder",
         }
       ),
-    [isFolder]
+    [listType]
   );
 
   const addNewFile = async () => {
@@ -297,14 +300,7 @@ const Dropdown: React.FC<DropdownProps> = ({
   };
 
   return (
-    <AccordionItem
-      value={id}
-      className={listStyles}
-      onClick={(e) => {
-        e.stopPropagation();
-        navigatatePage(id, listType);
-      }}
-    >
+    <AccordionItem value={id} className={listStyles}>
       <AccordionTrigger
         id={listType}
         className="hover:no-underline 
@@ -312,6 +308,10 @@ const Dropdown: React.FC<DropdownProps> = ({
         dark:text-muted-foreground 
         text-sm"
         disabled={listType === "file"}
+        onClick={(e) => {
+          e.stopPropagation();
+          navigatatePage(id, listType);
+        }}
       >
         <div className={groupIdentifies}>
           <div
@@ -368,14 +368,13 @@ const Dropdown: React.FC<DropdownProps> = ({
           ?.folders.find((folder) => folder.id === id)
           ?.files.filter((file) => !file.inTrash)
           .map((file) => {
-            const customFileId = `${id}folder${file.id}`;
             return (
-              <Dropdown
+              <FileComp
                 key={file.id}
                 title={file.title}
-                listType="file"
-                id={customFileId}
+                id={file.id}
                 iconId={file.iconId}
+                folderId={id}
               />
             );
           })}
