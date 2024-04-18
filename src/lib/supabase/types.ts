@@ -300,7 +300,7 @@ export interface Database {
         };
         Relationships: [
           {
-            foreignKeyName: "subscriptions_price_id_fkey";
+            foreignKeyName: "subscriptions_price_id_key";
             columns: ["price_id"];
             referencedRelation: "prices";
             referencedColumns: ["id"];
@@ -428,6 +428,6 @@ export type Subscription = InferSelectModel<typeof subscriptions> & {
   prices: Price;
 };
 
-export type ProductWirhPrice = Product & {
+export type ProductWithPrice = Product & {
   prices?: Price[];
 };

@@ -1,4 +1,5 @@
 "use server";
+
 import { validate } from "uuid";
 import { files, folders, users, workspaces } from "../../../migrations/schema";
 import db from "./db";
@@ -255,7 +256,6 @@ export const getActiveProductsWithPrice = async () => {
   try {
     const res = await db.query.products.findMany({
       where: (pro, { eq }) => eq(pro.active, true),
-
       with: {
         prices: {
           where: (pri, { eq }) => eq(pri.active, true),
@@ -264,9 +264,9 @@ export const getActiveProductsWithPrice = async () => {
     });
     if (res.length) return { data: res, error: null };
     return { data: [], error: null };
-  } catch (error) {
-    console.log(error);
-    return { data: [], error };
+  } catch (error: any) {
+    console.error(error);
+    return { data: [], error: error.message };
   }
 };
 

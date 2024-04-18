@@ -1,3 +1,4 @@
+import { relations, sql } from "drizzle-orm";
 import {
   boolean,
   integer,
@@ -13,7 +14,6 @@ import {
   subscriptionStatus,
   users,
 } from "../../../migrations/schema";
-import { relations, sql } from "drizzle-orm";
 
 export const workspaces = pgTable("workspaces", {
   id: uuid("id").defaultRandom().primaryKey().notNull(),
