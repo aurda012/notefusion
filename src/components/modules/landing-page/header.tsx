@@ -84,7 +84,7 @@ const Header = () => {
           dark:text-white
         "
         >
-          cypress.
+          NoteFusion
         </span>
       </Link>
       <NavigationMenu className="hidden md:block">

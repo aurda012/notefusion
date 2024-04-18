@@ -83,8 +83,6 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
   const [saving, setSaving] = useState(false);
   const [localCursors, setLocalCursors] = useState<any>([]);
 
-  console.log({ socket, isConnected });
-
   const details = useMemo(() => {
     let selectedDir;
     if (dirType === "file") {

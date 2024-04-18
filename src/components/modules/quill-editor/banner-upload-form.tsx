@@ -87,7 +87,10 @@ const BannerUploadForm: FC<BannerUploadFormProps> = ({ dirType, id }) => {
         });
         await updateWorkspace({ bannerUrl: filePath }, id);
       }
-    } catch (error) {}
+    } catch (error: any) {
+      console.error(error);
+      console.error(error.message);
+    }
   };
   return (
     <form

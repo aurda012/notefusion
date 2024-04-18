@@ -84,16 +84,15 @@ const File: React.FC<FileProps> = ({ title, id, iconId, folderId }) => {
   };
 
   const fileTitleChange = (e: any) => {
-    if (!workspaceId || !folderId) return;
-    const fid = id.split("folder");
-    if (fid.length === 2 && fid[1]) {
+    if (!workspaceId) return;
+    if (id) {
       dispatch({
         type: "UPDATE_FILE",
         payload: {
           file: { title: e.target.value },
           folderId,
           workspaceId,
-          fileId: fid[1],
+          fileId: id,
         },
       });
     }

@@ -7,7 +7,6 @@ import { redirect } from "next/navigation";
 
 const File = async ({ params }: { params: { fileId: string } }) => {
   const { data, error } = await getFileDetails(params.fileId);
-  console.log({ data, error });
   if (error || !data.length) redirect("/dashboard");
 
   return (
