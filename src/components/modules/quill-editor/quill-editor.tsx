@@ -2,6 +2,7 @@
 import { useAppState } from "@/hooks/useAppState";
 import { File, Folder, workspace } from "@/lib/supabase/types";
 import React, {
+  LegacyRef,
   useCallback,
   useEffect,
   useMemo,
@@ -748,7 +749,11 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
             {dirType.toUpperCase()}
           </span>
         </div>
-        <div id="container" className="max-w-[800px]" ref={wrapperRef} />
+        <div
+          id="container"
+          className="max-w-[800px]"
+          ref={wrapperRef as unknown as LegacyRef<HTMLDivElement>}
+        />
       </div>
     </>
   );
