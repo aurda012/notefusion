@@ -610,7 +610,7 @@ const QuillEditor: React.FC<QuillEditorProps> = ({
                           }
                           className="rounded-full"
                         />
-                        <AvatarFallback className="mt-1">
+                        <AvatarFallback className="my-auto">
                           {collaborator.email.substring(0, 2).toUpperCase()}
                         </AvatarFallback>
                       </Avatar>
